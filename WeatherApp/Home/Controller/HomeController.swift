@@ -60,6 +60,7 @@ class HomeController: ParentController {
         customView.refreshButton.setImage(outputs.iconRefreshButton, for: .normal)
         addTargetSegmentControl()
         addTargetRefreshButton()
+        customView.indicatorView.isHidden = outputs.isLoadingIndicatorHidden
     }
     
 }

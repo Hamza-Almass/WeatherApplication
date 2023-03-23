@@ -22,6 +22,15 @@ class WeatherView: UIView {
         return searchBar
     }()
     
+    let indicatorView: UIActivityIndicatorView = {
+        let indicatorView = UIActivityIndicatorView(style: .large)
+        indicatorView.startAnimating()
+        indicatorView.isHidden = false
+        indicatorView.translatesAutoresizingMaskIntoConstraints = false
+        indicatorView.color = .white
+        return indicatorView
+    }()
+    
     let refreshButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .white
@@ -107,7 +116,7 @@ class WeatherView: UIView {
     
     private func setupHirearchy() {
         
-        [countryInfoStackView, weatherInfoStackView, dateLabel, searchBar].forEach { subView in
+        [countryInfoStackView, weatherInfoStackView, dateLabel, searchBar, indicatorView].forEach { subView in
             addSubview(subView)
         }
         
@@ -126,6 +135,7 @@ class WeatherView: UIView {
         setupCountryInfoStackViewConstraints()
         setupWeatherInfoStackViewConstraints()
         setupDateLabelConstraints()
+        setupIndicatorViewConstraints()
     }
     
     private func setupSearchBarConstraints() {
@@ -158,6 +168,15 @@ class WeatherView: UIView {
             dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -30),
             dateLabel.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
+    private func setupIndicatorViewConstraints() {
+        NSLayoutConstraint.activate([
+            indicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            indicatorView.widthAnchor.constraint(equalToConstant: 50),
+            indicatorView.heightAnchor.constraint(equalToConstant: 50),
+            indicatorView.bottomAnchor.constraint(equalTo: dateLabel.topAnchor, constant: -25)
         ])
     }
     
