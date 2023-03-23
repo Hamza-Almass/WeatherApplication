@@ -42,3 +42,10 @@ class LargeLabel: BodyLabel {
         self.textAlignment = alignment
     }
 }
+
+class MediumLabel: BodyLabel {
+    override func setFont() {
+        self.font = .systemFont(ofSize: 24, weight: .heavy)
+        self.textAlignment = alignment
+    }
+}

@@ -22,6 +22,15 @@ class WeatherView: UIView {
         return searchBar
     }()
     
+    let indicatorView: UIActivityIndicatorView = {
+        let indicatorView = UIActivityIndicatorView(style: .large)
+        indicatorView.startAnimating()
+        indicatorView.isHidden = false
+        indicatorView.translatesAutoresizingMaskIntoConstraints = false
+        indicatorView.color = .white
+        return indicatorView
+    }()
+    
     let refreshButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .white
@@ -61,8 +70,8 @@ class WeatherView: UIView {
         return label
     }()
     
-    let dateLabel: BodyLabel = {
-        let label = BodyLabel(alignment: .natural)
+    let dateLabel: MediumLabel = {
+        let label = MediumLabel(alignment: .natural)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = CoreColor.mySecondaryColor.color
         return label
@@ -99,6 +108,7 @@ class WeatherView: UIView {
         super.init(frame: .zero)
         setupHirearchy()
         setupConstraints()
+        animateView(views: [weatherInfoStackView, dateLabel])
     }
     
     required init?(coder: NSCoder) {
@@ -107,7 +117,7 @@ class WeatherView: UIView {
     
     private func setupHirearchy() {
         
-        [countryInfoStackView, weatherInfoStackView, dateLabel, searchBar].forEach { subView in
+        [countryInfoStackView, weatherInfoStackView, dateLabel, searchBar, indicatorView].forEach { subView in
             addSubview(subView)
         }
         
@@ -126,6 +136,7 @@ class WeatherView: UIView {
         setupCountryInfoStackViewConstraints()
         setupWeatherInfoStackViewConstraints()
         setupDateLabelConstraints()
+        setupIndicatorViewConstraints()
     }
     
     private func setupSearchBarConstraints() {
@@ -161,21 +172,45 @@ class WeatherView: UIView {
         ])
     }
     
+    private func setupIndicatorViewConstraints() {
+        NSLayoutConstraint.activate([
+            indicatorView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            indicatorView.widthAnchor.constraint(equalToConstant: 50),
+            indicatorView.heightAnchor.constraint(equalToConstant: 50),
+            indicatorView.bottomAnchor.constraint(equalTo: dateLabel.topAnchor, constant: -25)
+        ])
+    }
+    
+    private func animateView(views: [UIView]) {
+        views.forEach { subView in
+            subView.animateView(duration: 0.4)
+        }
+    }
+    
 }
 
 extension WeatherView {
     func insertSegmentControl(titles: [String]) {
-        weatherInfoStackView.arrangedSubviews.forEach { subView in
-            if subView is UISegmentedControl {
-                subView.removeFromSuperview()
-            }
+        if  segmentControl == nil {
+            segmentControl = UISegmentedControl(items: titles)
+            styleSegmentControl(segmentControl: segmentControl)
+            segmentControl.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            weatherInfoStackView.insertArrangedSubview(segmentControl, at: 0)
         }
-        
-        segmentControl = UISegmentedControl(items: titles)
+    }
+    
+    fileprivate func styleSegmentControl(segmentControl: UISegmentedControl) {
         segmentControl.translatesAutoresizingMaskIntoConstraints = false
         segmentControl.selectedSegmentTintColor = CoreColor.mySecondaryColor.color
         segmentControl.backgroundColor = .white
-        weatherInfoStackView.insertArrangedSubview(segmentControl, at: 0)
+        segmentControl.backgroundColor = CoreColor.myPrimaryColor.color
+        segmentControl.layer.shadowColor = UIColor.black.withAlphaComponent(0.8).cgColor
+        segmentControl.layer.shadowOffset = .init(width: 3, height: 3)
+        segmentControl.layer.shadowOpacity = 0.4
+        segmentControl.layer.shadowRadius = 10
+        segmentControl.clipsToBounds = false
+        segmentControl.layer.borderColor = UIColor.white.cgColor
+        segmentControl.layer.borderWidth = 0.2
     }
 }
 

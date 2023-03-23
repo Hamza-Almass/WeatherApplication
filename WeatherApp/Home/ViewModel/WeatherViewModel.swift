@@ -39,6 +39,7 @@ protocol WeatherViewModelOutput {
     var weatherUnits: [String] { get }
     var selectedSegmentIndex: Int { get }
     var iconRefreshButton: UIImage? { get }
+    var isLoadingIndicatorHidden: Bool { get }
 }
 
 class WeatherViewModel: WeatherViewModelType {
@@ -52,6 +53,7 @@ class WeatherViewModel: WeatherViewModelType {
     private let locationManager: LocationManagerType
     private var units: WeatherUnits
     private var countrySearch: String
+    internal var isLoadingIndicatorHide: Bool = false
     
     private var weather: Weather?
     private var error: Error?
@@ -81,9 +83,11 @@ class WeatherViewModel: WeatherViewModelType {
             switch result {
             case .success(let success):
                 self.weather = success
+                self.isLoadingIndicatorHide = true
                 RealmManager.shared.saveCurrentWeather(weather: success)
                 self.delegate?.FinishWithSuccess()
             case .failure(let error):
+                self.isLoadingIndicatorHide = true
                 self.error = error
                 self.delegate?.finishWithError()
             }
@@ -113,12 +117,14 @@ extension WeatherViewModel: WeatherViewModelInput {
     }
     
     func refresh() {
+        isLoadingIndicatorHide = false
         load()
     }
     
     func load() {
         locationManager.getUserLocation { location , error in
             if let error = error {
+                self.isLoadingIndicatorHide = true
                 self.error = error
                 self.delegate?.finishWithError()
                 return
@@ -177,7 +183,8 @@ extension WeatherViewModel: WeatherViewModelOutput {
     }
     
     var errorMessage: String {
-        self.error?.localizedDescription ?? ""
+        (self.error as? NSError)?.domain ?? ""
+       // self.error?.localizedDescription ?? ""
     }
     
     var weatherUnits: [String] {
@@ -186,6 +193,10 @@ extension WeatherViewModel: WeatherViewModelOutput {
     
     var selectedSegmentIndex: Int {
         return units == .kelvin ? 2 : units == .fahrenheit ? 0 : 1
+    }
+    
+    var isLoadingIndicatorHidden: Bool {
+        self.isLoadingIndicatorHide
     }
     
 }
