@@ -18,6 +18,14 @@ extension HomeController {
         customView.segmentControl.selectedSegmentIndex = segmentControl.selectedSegmentIndex
     }
     
+    func addTargetRefreshButton() {
+        customView.refreshButton.addTarget(self, action: #selector(handleRfersh), for: .touchUpInside)
+    }
+    
+    @objc private func handleRfersh() {
+        viewModel.inputs.refresh()
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }

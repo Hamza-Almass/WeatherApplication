@@ -21,6 +21,12 @@ class WeatherView: UIView {
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         return searchBar
     }()
+    
+    let refreshButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.tintColor = .white
+        return button
+    }()
 
     var segmentControl: UISegmentedControl!
     

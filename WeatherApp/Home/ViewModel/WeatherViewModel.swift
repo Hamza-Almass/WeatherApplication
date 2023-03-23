@@ -38,6 +38,7 @@ protocol WeatherViewModelOutput {
     var errorMessage: String { get }
     var weatherUnits: [String] { get }
     var selectedSegmentIndex: Int { get }
+    var iconRefreshButton: UIImage? { get }
 }
 
 class WeatherViewModel: WeatherViewModelType {
@@ -112,7 +113,7 @@ extension WeatherViewModel: WeatherViewModelInput {
     }
     
     func refresh() {
-        
+        load()
     }
     
     func load() {
@@ -132,6 +133,10 @@ extension WeatherViewModel: WeatherViewModelInput {
 }
 
 extension WeatherViewModel: WeatherViewModelOutput {
+    
+    var iconRefreshButton: UIImage? {
+        UIImage(systemName: "arrow.clockwise")
+    }
     
     var navigationTitle: String {
         return "Weather"

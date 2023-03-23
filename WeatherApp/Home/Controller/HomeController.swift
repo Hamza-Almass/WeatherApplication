@@ -28,6 +28,7 @@ class HomeController: ParentController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addLeftBarButtonItem()
         bindInputs(viewModel.inputs)
         bindOutputs(viewModel.outputs)
     }
@@ -35,6 +36,10 @@ class HomeController: ParentController {
     override func loadView() {
         super.loadView()
         view = customView
+    }
+    
+    private func addLeftBarButtonItem() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: customView.refreshButton)
     }
     
     private func bindInputs(_ inputs: WeatherViewModelInput) {
@@ -52,7 +57,9 @@ class HomeController: ParentController {
         customView.tempretureLabel.text = outputs.tempreture
         customView.insertSegmentControl(titles: outputs.weatherUnits)
         customView.segmentControl.selectedSegmentIndex = outputs.selectedSegmentIndex
+        customView.refreshButton.setImage(outputs.iconRefreshButton, for: .normal)
         addTargetSegmentControl()
+        addTargetRefreshButton()
     }
     
 }
