@@ -124,6 +124,7 @@ extension WeatherViewModel: WeatherViewModelInput {
     func load() {
         locationManager.getUserLocation { location , error in
             if let error = error {
+                self.isLoadingIndicatorHide = true
                 self.error = error
                 self.delegate?.finishWithError()
                 return
@@ -182,7 +183,8 @@ extension WeatherViewModel: WeatherViewModelOutput {
     }
     
     var errorMessage: String {
-        self.error?.localizedDescription ?? ""
+        (self.error as? NSError)?.domain ?? ""
+       // self.error?.localizedDescription ?? ""
     }
     
     var weatherUnits: [String] {

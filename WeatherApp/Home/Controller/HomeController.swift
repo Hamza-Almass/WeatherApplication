@@ -72,7 +72,7 @@ extension HomeController: WeatherViewModelDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.showAlert(title: self.viewModel.errorTitle, message: self.viewModel.errorMessage) {
-                // Do something here if you want
+                self.customView.indicatorView.isHidden = true
             }
         }
     }

@@ -36,6 +36,7 @@
 		13478B6129CBCBFA009CB05D /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 13478B6029CBCBFA009CB05D /* RealmSwift */; };
 		13478B6429CBCD35009CB05D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13478B6329CBCD35009CB05D /* RealmManager.swift */; };
 		13478B6729CBCD83009CB05D /* WeatherStored.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13478B6629CBCD83009CB05D /* WeatherStored.swift */; };
+		13478B6A29CBE5B0009CB05D /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13478B6929CBE5B0009CB05D /* UIView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		13478B5B29CBBC8D009CB05D /* HomeController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeController+Extension.swift"; sourceTree = "<group>"; };
 		13478B6329CBCD35009CB05D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		13478B6629CBCD83009CB05D /* WeatherStored.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStored.swift; sourceTree = "<group>"; };
+		13478B6929CBE5B0009CB05D /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 		13478B0129CB57C3009CB05D /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				13478B6829CBE5A0009CB05D /* Extensions */,
 				13478B6229CBCD21009CB05D /* RealamManager */,
 				13478B5329CBAC98009CB05D /* Color */,
 				13478B5029CBA6BE009CB05D /* LocationManager */,
@@ -294,6 +297,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		13478B6829CBE5A0009CB05D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				13478B6929CBE5B0009CB05D /* UIView+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -382,6 +393,7 @@
 				13478B6729CBCD83009CB05D /* WeatherStored.swift in Sources */,
 				13478B3629CB695A009CB05D /* WeatherView.swift in Sources */,
 				13478B4029CB6F95009CB05D /* WeatherRepository.swift in Sources */,
+				13478B6A29CBE5B0009CB05D /* UIView+Extension.swift in Sources */,
 				13478B1F29CB586A009CB05D /* Weather.swift in Sources */,
 				13478B2D29CB5F34009CB05D /* WeatherAppEndPoint.swift in Sources */,
 				13478B3929CB69CD009CB05D /* BodyLabel.swift in Sources */,
