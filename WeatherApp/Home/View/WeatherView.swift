@@ -70,8 +70,8 @@ class WeatherView: UIView {
         return label
     }()
     
-    let dateLabel: BodyLabel = {
-        let label = BodyLabel(alignment: .natural)
+    let dateLabel: MediumLabel = {
+        let label = MediumLabel(alignment: .natural)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = CoreColor.mySecondaryColor.color
         return label
@@ -108,6 +108,7 @@ class WeatherView: UIView {
         super.init(frame: .zero)
         setupHirearchy()
         setupConstraints()
+        animateView(views: [weatherInfoStackView, dateLabel])
     }
     
     required init?(coder: NSCoder) {
@@ -180,21 +181,36 @@ class WeatherView: UIView {
         ])
     }
     
+    private func animateView(views: [UIView]) {
+        views.forEach { subView in
+            subView.animateView(duration: 0.4)
+        }
+    }
+    
 }
 
 extension WeatherView {
     func insertSegmentControl(titles: [String]) {
-        weatherInfoStackView.arrangedSubviews.forEach { subView in
-            if subView is UISegmentedControl {
-                subView.removeFromSuperview()
-            }
+        if  segmentControl == nil {
+            segmentControl = UISegmentedControl(items: titles)
+            styleSegmentControl(segmentControl: segmentControl)
+            segmentControl.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            weatherInfoStackView.insertArrangedSubview(segmentControl, at: 0)
         }
-        
-        segmentControl = UISegmentedControl(items: titles)
+    }
+    
+    fileprivate func styleSegmentControl(segmentControl: UISegmentedControl) {
         segmentControl.translatesAutoresizingMaskIntoConstraints = false
         segmentControl.selectedSegmentTintColor = CoreColor.mySecondaryColor.color
         segmentControl.backgroundColor = .white
-        weatherInfoStackView.insertArrangedSubview(segmentControl, at: 0)
+        segmentControl.backgroundColor = CoreColor.myPrimaryColor.color
+        segmentControl.layer.shadowColor = UIColor.black.withAlphaComponent(0.8).cgColor
+        segmentControl.layer.shadowOffset = .init(width: 3, height: 3)
+        segmentControl.layer.shadowOpacity = 0.4
+        segmentControl.layer.shadowRadius = 10
+        segmentControl.clipsToBounds = false
+        segmentControl.layer.borderColor = UIColor.white.cgColor
+        segmentControl.layer.borderWidth = 0.2
     }
 }
 
